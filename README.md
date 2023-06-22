@@ -1,72 +1,103 @@
 # Titanic Data Analysis
 
-This data analysis explores various aspects of the Titanic dataset to gain insights into the passengers' demographics, their cabins, cities of embarkation, family status, and factors influencing survival rates.
+This project analyzes the Titanic dataset to gain insights into the passengers on board the Titanic and factors that influenced their survival. The dataset used for this analysis is available on Kaggle at [Titanic Dataset](https://www.kaggle.com/c/titanic/data).
 
 ## Dataset Information
-- Dataset Link: [Titanic Dataset](https://www.kaggle.com/c/titanic)
 
-### Part 1: Column Names Clarification for `train.csv`
-- `Survived` column: 0 indicates not survived, 1 indicates survived
-- `Pclass`: Class of the passenger (1, 2, 3)
-- `SibSp`: Number of siblings on board (0 indicates none, 1 indicates at least one)
-- `Parch`: Number of parents or children aboard
-- `Embarked`: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton)
+The dataset contains information about the passengers on the Titanic. Here are some key columns and their descriptions from the `train.csv` file:
 
-Upon using the `.info()` function, it was found that the `Cabin` column has only 284 entries out of 891 total passengers, indicating missing information for the majority of passengers.
+- Survived: 0 indicates not survived, 1 indicates survived.
+- Pclass: Class of the passenger (1, 2, or 3).
+- Sex: Gender of the passenger.
+- Age: Age of the passenger.
+- SibSp: Number of siblings/spouses aboard.
+- Parch: Number of parents/children aboard.
+- Embarked: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton).
 
-## Questions to be Answered
+Please note that the "Cabin" column has only 284 non-null entries out of 891 total passengers.
+
+## Project Overview
+
+The project aims to answer the following questions about the Titanic dataset:
 
 1. Who were the passengers on the Titanic? (Ages, Gender, Class, etc.)
 2. What deck were the passengers on, and how does that relate to their class?
 3. Where did the passengers come from?
-4. Who was alone and who was with family?
-5. What factors helped someone survive the sinking? (broader question)
+4. Who was alone, and who was with family?
+5. What factors helped someone survive the sinking?
+6. Did the deck have an effect on the passengers' survival rate?
+7. Did having a family member increase the odds of surviving the crash?
 
-## Data Preparation
+## Project Steps
 
-The datasets used for analysis were obtained from Kaggle.com as part of a challenge task.
+**Part 1: Data Preparation**
 
-### Part 2: Additional Information
+1. Load the dataset from the provided CSV file.
+2. Check for missing information using the `info()` method.
+   - Note that the "Cabin" column has missing data.
 
-- `FacetGrid` enables making multiple plots on one figure.
-- A KDE plot comparing male versus female passengers was created.
-- Note: `shade=True` is not available in seaborn anymore, so `fill=True` is used instead.
-- The KDE plot for Male vs. Female vs. Children extends beyond 16 years due to the bandwidth.
+**Part 2: Exploratory Data Analysis**
 
-## Analysis Findings
+Perform exploratory data analysis to answer the questions and gain insights into the dataset. Use various plots, including bar plots, count plots, histograms, and kernel density estimation (KDE) plots.
 
-### Answering Question 2: What deck were the passengers on, and how does that relate to their class?
+**Answers to Questions**
 
-To determine the deck for each passenger:
-- NaN values in the `Cabin` column were dropped.
-- The first letter from the `Cabin` column was extracted to identify the deck (A, B, C, D, E, F).
+1. Who were the passengers on the Titanic? (Ages, Gender, Class, etc.)
 
-### Answering Question 3: Where did the passengers come from?
+   - Visualize the distribution of passengers by sex (male vs. female).
+   - Analyze the distribution of passengers by gender and class.
+   - Determine the distribution of passengers by age.
 
-A categorical plot (`catplot`) was used to visualize the distribution of passengers across different cities of embarkation (`Embarked`), categorized by passenger class (`Pclass`).
+   ![Distribution of Passengers by Sex](plot1.png)
+   
+   ![Distribution of Passengers by Gender and Class](plot2.png)
+   
+   ![Distribution of Passengers by Age](plot3.png)
 
-- The majority of passengers embarked from Southampton (`S`).
-- Queenstown (`Q`) had mostly third-class passengers, indicating a potential difference in financial situations.
-- Cherbourg (`C`) had a significant number of passengers who embarked in the first class.
+2. What deck were the passengers on, and how does that relate to their class?
 
-### Answering Question 4: Who was alone and who was with family?
+   - Extract the deck information from the "Cabin" column.
+   - Visualize the distribution of passengers by cabin deck and class.
 
-The definition of "alone" was established as follows:
-- If both `SibSp` (number of siblings) and `Parch` (number of parents or children) are 0, the passenger was considered completely alone.
+   ![Distribution of Passengers by Deck and Class](plot4.png)
 
-### Answering Question 5: What factors helped someone survive the sinking?
+3. Where did the passengers come from?
 
-- A new column, `Survivor`, was created to identify whether a passenger survived (yes) or not (no).
-- It was observed that passenger class and gender played significant roles in survival chances.
-- Being male dramatically decreased the chances of survival.
-- Older females had better survival chances than older males.
+   - Analyze the distribution of passengers by the port of embarkation (Cherbourg, Queenstown, Southampton) and class.
 
-## Additional Questions
+   ![Distribution of Passengers by Port of Embarkation and Class](plot5.png)
 
-### 1. Did the deck have an effect on the passengers' survival rate? Did this answer match up with your intuition?
+4. Who was alone, and who was with family?
 
-To investigate the effect of the deck on survival rate, the analysis considered the relationship between deck and class.
+   - Define the "Alone" column based on the number of siblings/spouses and parents/children aboard.
+   - Visualize the count of passengers who were alone versus with family.
 
-### 2. Did having a family member increase the odds of surviving the crash?
+   ![Count of Passengers Alone vs. With Family](plot6.png)
 
-The analysis explored whether having a family member increased the odds of surviving the crash.
+5. What factors helped someone survive the sinking?
+
+   - Create a "Survivor" column mapping the survival status (0 = No, 1 = Yes).
+   - Visualize the count of survivors.
+   - Analyze the survival rate based on passenger class, gender, and age.
+
+   ![Count of Survivors](plot7.png)
+   
+   ![Survival Rate by Passenger Class](plot8.png)
+   
+   ![Survival Rate by Gender](plot9.png)
+   
+   ![Survival Rate by Age](plot10.png)
+
+6. Did the deck have an effect on the passengers' survival rate?
+
+   - To determine the effect of the deck on the passengers' survival rate, analyze the survival rate based on the deck they were on.
+
+   ![Survival Count by Deck and Class](plot11.png)
+
+7. Did having a family member increase the odds of surviving the crash?
+
+   - Analyze the survival rate based on the presence of family members (siblings/spouses and parents/children).
+
+   ![Survival Rate by Presence of Family](plot12.png)
+
+Please note that the actual plots are not shown here as this is a text-based interface. You can generate the plots using data visualization libraries such as Matplotlib or Seaborn by following the provided instructions.
