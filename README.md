@@ -48,7 +48,7 @@ Perform exploratory data analysis to answer the questions and gain insights into
    - Analyze the distribution of passengers by gender and class.
    - Determine the distribution of passengers by age.
 
-   ![Distribution of Passengers by Sex]([plot1.png](https://www.dropbox.com/s/uf63jcl6ohekeye/01_Distribution%20of%20Passengers%20by%20Sex%20-%20Male%20VS.%20Female.png?dl=0))
+   ![Distribution of Passengers by Sex](https://www.dropbox.com/sh/70exukhhno032te/AABZ3wi72MZKGTsG8fzZFbS8a?dl=0)
    
    ![Distribution of Passengers by Gender and Class](plot2.png)
    
