@@ -62,57 +62,42 @@ This KDE plot provides insights into the distribution of gender and age across d
    - Extract the deck information from the "Cabin" column.
    - Visualize the distribution of passengers by cabin deck and class.
 
-   ![Distribution of Passengers by Deck and Class](plot4.png)
+   ![Distribution of Passengers by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/8723ad1d-56bd-48e6-860b-0080f4f8a03f)
 
 
-3. What deck were the passengers on, and how does that relate to their class?
-
-   - Extract the deck information from the "Cabin" column.
-   - Visualize the distribution of passengers by cabin deck and class.
-
-   ![Distribution of Passengers by Deck and Class](plot4.png)
-
-4. What deck were the passengers on, and how does that relate to their class?
-
-   - Extract the deck information from the "Cabin" column.
-   - Visualize the distribution of passengers by cabin deck and class.
-
-   ![Distribution of Passengers by Deck and Class](plot4.png)
-
-5. Where did the passengers come from?
+3. Where did the passengers come from?
 
    - Analyze the distribution of passengers by the port of embarkation (Cherbourg, Queenstown, Southampton) and class.
 
-   ![Distribution of Passengers by Port of Embarkation and Class](plot5.png)
+   ![Distribution of Passengers by Port of Embarkation and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/7d4265d6-042c-4e09-9cdb-2b9809ad5c89)
 
-6. Who was alone, and who was with family?
 
-   - Define the "Alone" column based on the number of siblings/spouses and parents/children aboard.
-   - Visualize the count of passengers who were alone versus with family.
+4. Who was alone, and who was with family?
 
-   ![Count of Passengers Alone vs. With Family](plot6.png)
+   - Determine if passengers were traveling alone or with family by creating a new column called "Alone" based on the number of siblings/spouses and parents/children aboard.
+   - Visualize the count of passengers who were alone versus with family using a bar plot to compare the number of individuals in each category.
 
-7. What factors helped someone survive the sinking?
+   ![Count of Passengers Alone vs. with Family](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/b9aaf087-23b6-48e0-a9dd-03e3619228ca)
+
+5. What factors helped someone survive the sinking?
 
    - Create a "Survivor" column mapping the survival status (0 = No, 1 = Yes).
    - Visualize the count of survivors.
-   - Analyze the survival rate based on passenger class, gender, and age.
-
    ![Count of Survivors](plot7.png)
-   
+   - Analyze the survival rate based on passenger class, gender, and age.
    ![Survival Rate by Passenger Class](plot8.png)
    
    ![Survival Rate by Gender](plot9.png)
    
    ![Survival Rate by Age](plot10.png)
 
-8. Did the deck have an effect on the passengers' survival rate?
+6. Did the deck have an effect on the passengers' survival rate?
 
    - To determine the effect of the deck on the passengers' survival rate, analyze the survival rate based on the deck they were on.
 
    ![Survival Count by Deck and Class](plot11.png)
 
-9. Did having a family member increase the odds of surviving the crash?
+7. Did having a family member increase the odds of surviving the crash?
 
    - Analyze the survival rate based on the presence of family members (siblings/spouses and parents/children).
 
