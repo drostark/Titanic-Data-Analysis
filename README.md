@@ -99,5 +99,3 @@ Perform exploratory data analysis to answer the questions and gain insights into
    - Analyze the survival rate based on the presence of family members (siblings/spouses and parents/children).
 
    ![Survival Rate by Presence of Family](plot12.png)
-
-Please note that the actual plots are not shown here as this is a text-based interface. You can generate the plots using data visualization libraries such as Matplotlib or Seaborn by following the provided instructions.
