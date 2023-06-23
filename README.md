@@ -30,11 +30,27 @@ In this project, utilizing the Google data analysis process, which includes the 
 
 **Part 2: Data Preparation**
 --------------------
-1. Load the dataset from the provided CSV file.
+1. Imports
+```python
+import pandas as pd
+from pandas import Series, DataFrame
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+2. Adjusting the plot title and incorporating interactive plotting capabilities.
+```python
+# Interactive plotting
+plt.ion()
+# Set the global title offset
+title_offset = 0.2
+plt.rcParams['axes.titlepad'] = title_offset
+```
+3. Load the dataset from the provided CSV file.
 ```python
 titanic_df = pd.read_csv("input/train.csv")
 ```
-2. General Overview of the train.csv Dataset 
+4. General Overview of the train.csv Dataset 
 ```python
 titanic_df.head(10)
 ```
@@ -61,7 +77,7 @@ min       1.000000    0.000000    1.000000    0.420000    0.000000    0.000000  
 75%     668.500000    1.000000    3.000000   38.000000    1.000000    0.000000   31.000000
 max     891.000000    1.000000    3.000000   80.000000    8.000000    6.000000  512.329200
 ```
-3. Check for missing information using the `info()` and `isnull()` methods.
+5. Check for missing information using the `info()` and `isnull()` methods.
 ```python
 titanic_df.info()
 ```
@@ -428,24 +444,85 @@ Survival Rate for Class 2: 47.28%
 Survival Rate for Class 3: 24.24%
 ```
    ![Survival Rate by Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3e9f873b-15b6-4f70-918b-04daf096857f)
+```python
+sns.lineplot(x='Pclass', y='Survived',hue='person', data=titanic_df, palette='winter', marker='o')
+plt.xticks(np.arange(1, 4, 1), ['1', '2', '3'])
+plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
+plt.title('Survival Rate by Passenger Class and Gender')
+```
+```python
+for pclass in survival_rates.index.levels[0]:
+    child_rate = survival_rates.get((pclass, 'child'), 0)
+    female_rate = survival_rates.get((pclass, 'female'), 0)
+    male_rate = survival_rates.get((pclass, 'male'), 0)
+    print(f"Survival Rate for Class {pclass}: child: {child_rate:.2%}, female: {female_rate:.2%}, male: {male_rate:.2%}")
+```
+```
+Survival Rate for Class 1: child: 83.33%, female: 97.80%, male: 35.29%
+Survival Rate for Class 2: child: 100.00%, female: 90.91%, male: 8.08%
+Survival Rate for Class 3: child: 43.10%, female: 49.12%, male: 11.91%
+```
+   ![Survival Rate by Passenger Class and gender](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3a83796b-438b-41b4-9034-8c48981beb13)
 
 ```python
+sns.lmplot(x='Age',y='Survived',data=titanic_df,palette='winter')
+plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
+plt.title('Survival Rate by Age')
+```
+```python
+age_survival_rate = titanic_df.groupby('Age')['Survived'].mean()
+age_decline_rate = age_survival_rate.pct_change() * 100
+age_decline_rate = age_decline_rate.replace([np.inf, -np.inf], np.nan).dropna()
+average_decline = age_decline_rate.mean()
+print(f"Average Decline in Survival Rate: {average_decline:.2f}%")
+```
+```
+Average Decline in Survival Rate: -5.80%
+```
+   ![Survival Rate by Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3732de20-f56a-49f7-bdf9-fba0c9db49ab)
 
+```python
+generations = [10,20,40,60,80]
+sns.lmplot(x='Age',y='Survived', hue='Sex', data=titanic_df, palette='winter',x_bins=generations)
+plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
+plt.title('Survival Rate by Age and Sex')
 ```
    ![Survival Rate by Sex and Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/1fff2295-a869-4f9a-a380-10715931e934)
 ```python
-
+sns.lmplot(x='Age',y='Survived', hue='Pclass', data=titanic_df, palette='winter',x_bins=generations)
+plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
+plt.title('Survival Rate by Age and Passenger Class')
 ```
    ![Survival Rate by Age and Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/c8dd08ee-fb37-42cd-abd3-f6ba9e081702)
 
 6. Did the deck have an effect on the passengers' survival rate?
-
-   - To determine the effect of the deck on the passengers' survival rate, analyze the survival rate based on the deck they were on.
-
-      ![Survival Count by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/0e0fc83c-8351-4664-9587-3d8113173aa8)
+```python
+merged_df = pd.concat([cabin_df['Cabin'], titanic_df['Survived']], axis=1)
+merged_df = merged_df.dropna()
+sns.barplot(x='Cabin', y='Survived', data=merged_df, palette='winter')
+plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
+plt.title('Survival Rate by Cabin')
+```
+   ![Survival Count by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/0e0fc83c-8351-4664-9587-3d8113173aa8)
 
 7. Did having a family member increase the odds of surviving the crash?
+```python
+merged_df2 = pd.concat([titanic_df['Survived'], titanic_df['Alone']], axis=1)
+Alone_mapping = {'With Family': 'With Family', 'Alone': 'Without Family'}
+sns.barplot(x='Alone', y='Survived', data=merged_df2, palette='winter')
+```
+   ![Survival Rate by Presence of Family](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/947047c0-ca9c-4d31-99e9-d8a1a11ccc0c)
 
-   - Analyze the survival rate based on the presence of family members (siblings/spouses and parents/children).
+**Part 5: Conclusion**
+--------------------
+Throughout this analysis, we have made significant progress, starting from data comprehension to delving deeper into the factors influencing survival rates in the Titanic crash.
 
-      ![Survival Rate by Presence of Family](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/947047c0-ca9c-4d31-99e9-d8a1a11ccc0c)
+Based on our analysis, the following insights have emerged:
+
+1. The majority of passengers onboard were male, yet female passengers had a higher likelihood of surviving the crash.
+2. Among female passengers, those in their 20s, traveling in passenger class 1 and staying in cabins A or B had the highest chances of survival.
+3. Conversely, male passengers who were traveling alone had a lower probability of surviving the crash.
+
+Preparing this analysis has been an enriching experience that has significantly contributed to my professional development. Writing the article has not only deepened my understanding of the data but also provided an opportunity to refine my analytical skills and storytelling abilities. By structuring my thoughts and effectively communicating the insights, I have honed my report-writing capabilities. This project has served as a reminder of the fundamental principles of analysis and has motivated me to pursue further projects and continue my growth as a data analyst.
+
+Moreover, I would like to mention that this analysis is an ongoing endeavor. Currently, I am utilizing SciKit to construct an entropy decision tree, which aims to predict the last survivors based on the provided dataset. I am excited about the potential insights this approach can offer. __Thank you for your time, and have a wonderful day!__
