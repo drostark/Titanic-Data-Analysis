@@ -515,14 +515,24 @@ sns.barplot(x='Alone', y='Survived', data=merged_df2, palette='winter')
 
 **Part 5: Conclusion**
 --------------------
-Throughout this analysis, we have made significant progress, starting from data comprehension to delving deeper into the factors influencing survival rates in the Titanic crash.
+Throughout this analysis, I have gained valuable insights into the factors influencing survival rates in the Titanic crash. My findings reveal:
 
-Based on our analysis, the following insights have emerged:
+1.Gender Disparity:
+   - Female passengers had a higher likelihood of surviving compared to males.
+   - Among females, those in their 20s had the highest chances of survival.
 
-1. The majority of passengers onboard were male, yet female passengers had a higher likelihood of surviving the crash.
-2. Among female passengers, those in their 20s, traveling in passenger class 1 and staying in cabins A or B had the highest chances of survival.
-3. Conversely, male passengers who were traveling alone had a lower probability of surviving the crash.
+2.Passenger Class:
+   - First-class passengers had a higher probability of surviving.
+   - Male passengers traveling alone had a lower chance of survival.
 
-Preparing this analysis has been an enriching experience that has significantly contributed to my professional development. Writing the article has not only deepened my understanding of the data but also provided an opportunity to refine my analytical skills and storytelling abilities. By structuring my thoughts and effectively communicating the insights, I have honed my report-writing capabilities. This project has served as a reminder of the fundamental principles of analysis and has motivated me to pursue further projects and continue my growth as a data analyst.
+3.Economic Implications of Embarkation Cities:
+   - Queenstown predominantly served as an embarkation point for third-class passengers, suggesting distinct economic characteristics.
+   - Cherbourg had a higher concentration of affluent individuals, with the majority of passengers belonging to the first-class category.
 
-Moreover, I would like to mention that this analysis is an ongoing endeavor. Currently, I am utilizing SciKit to construct an entropy decision tree, which aims to predict the last survivors based on the provided dataset. I am excited about the potential insights this approach can offer. __Thank you for your time, and have a wonderful day!__
+These insights underscore the importance of factors such as gender, age, passenger class, and family status in shaping the outcomes of the Titanic tragedy. They highlight the significance of access to better accommodations and provide a glimpse into the socioeconomic dynamics of the time.
+
+Preparing this analysis has been an enriching experience, deepening my understanding of the data and refining my analytical and storytelling abilities. The project has reminded me of the fundamental principles of analysis and motivated me to pursue further projects for continuous growth as a data analyst.
+
+Furthermore, my analysis is an ongoing endeavor. I am utilizing SciKit to construct an entropy decision tree, which aims to predict the last survivors based on the provided dataset. I am excited about the potential insights this approach can offer.
+
+__Thank you for your time, and have a wonderful day!__
