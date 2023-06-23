@@ -14,22 +14,9 @@ The dataset contains information about the passengers on the Titanic. Here are s
 - Cabin: Cabin Number
 - Embarked: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton).
 
-```python
-titanic_df.head(10)
-```
-```python
-   PassengerId  Survived  Pclass                                               Name     Sex   Age  SibSp  Parch            Ticket     Fare Cabin Embarked
-0            1         0       3                            Braund, Mr. Owen Harris    male  22.0      1      0         A/5 21171   7.2500   NaN        S
-1            2         1       1  Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1      0          PC 17599  71.2833   C85        C
-2            3         1       3                             Heikkinen, Miss. Laina  female  26.0      0      0  STON/O2. 3101282   7.9250   NaN        S
-3            4         1       1       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1      0            113803  53.1000  C123        S
-4            5         0       3                           Allen, Mr. William Henry    male  35.0      0      0            373450   8.0500   NaN        S
-```
-Please note that the "Cabin" column has only 284 non-null entries out of 891 total passengers.
-
 ## Project Overview
 
-The project aims to answer the following questions about the Titanic dataset:
+In this project, utilizing the Google data analysis process, which includes the Ask, Prepare, Process, Analyze, Share, and Act phases, our objective is to address the following inquiries pertaining to the Titanic dataset:
 
 1. Who were the passengers on the Titanic? (Ages, Gender, Class, etc.)
 2. What deck were the passengers on, and how does that relate to their class?
@@ -44,9 +31,74 @@ The project aims to answer the following questions about the Titanic dataset:
 **Part 1: Data Preparation**
 
 1. Load the dataset from the provided CSV file.
-2. Check for missing information using the `info()` method.
-   - Note that the "Cabin" column has missing data.
+```python
+titanic_df = pd.read_csv("input/train.csv")
+```
+2. General Overview of the train.csv Dataset 
+```python
+titanic_df.head(10)
+```
+```
+   PassengerId  Survived  Pclass                                               Name     Sex   Age  SibSp  Parch            Ticket     Fare Cabin Embarked
+0            1         0       3                            Braund, Mr. Owen Harris    male  22.0      1      0         A/5 21171   7.2500   NaN        S
+1            2         1       1  Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1      0          PC 17599  71.2833   C85        C
+2            3         1       3                             Heikkinen, Miss. Laina  female  26.0      0      0  STON/O2. 3101282   7.9250   NaN        S
+3            4         1       1       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1      0            113803  53.1000  C123        S
+4            5         0       3                           Allen, Mr. William Henry    male  35.0      0      0            373450   8.0500   NaN        S
+```
 
+```python
+titanic_df.describe()
+```
+```
+       PassengerId    Survived      Pclass         Age       SibSp       Parch        Fare
+count   891.000000  891.000000  891.000000  714.000000  891.000000  891.000000  891.000000
+mean    446.000000    0.383838    2.308642   29.699118    0.523008    0.381594   32.204208
+std     257.353842    0.486592    0.836071   14.526497    1.102743    0.806057   49.693429
+min       1.000000    0.000000    1.000000    0.420000    0.000000    0.000000    0.000000
+25%     223.500000    0.000000    2.000000   20.125000    0.000000    0.000000    7.910400
+50%     446.000000    0.000000    3.000000   28.000000    0.000000    0.000000   14.454200
+75%     668.500000    1.000000    3.000000   38.000000    1.000000    0.000000   31.000000
+max     891.000000    1.000000    3.000000   80.000000    8.000000    6.000000  512.329200
+```
+4. Check for missing information using the `info()` and `isnull()` methods.
+```python
+titanic_df.info()
+```
+```
+ 1   Survived     891 non-null    int64
+ 2   Pclass       891 non-null    int64
+ 3   Name         891 non-null    object
+ 4   Sex          891 non-null    object
+ 5   Age          714 non-null    float64
+ 6   SibSp        891 non-null    int64
+ 7   Parch        891 non-null    int64
+ 8   Ticket       891 non-null    object
+ 9   Fare         891 non-null    float64
+ 10  Cabin        204 non-null    object
+ 11  Embarked     889 non-null    object
+dtypes: float64(2), int64(5), object(5)
+memory usage: 83.7+ KB
+```
+- The training dataset consists of a total of 891 rows and 12 columns. Please note that the "Cabin" column has only 204 non-null entries out of 891 total passengers.
+```python
+titanic_df.isnull().sum()
+```
+```
+PassengerId      0
+Survived         0
+Pclass           0
+Name             0
+Sex              0
+Age            177
+SibSp            0
+Parch            0
+Ticket           0
+Fare             0
+Cabin          687
+Embarked         2
+dtype: int64
+```
 **Part 2: Exploratory Data Analysis**
 
 Perform exploratory data analysis to answer the questions and gain insights into the dataset. Use various plots, including bar plots, count plots, histograms, and kernel density estimation (KDE) plots.
