@@ -365,7 +365,7 @@ Passengers in Cabin Class E: 32
 Passengers in Cabin Class F: 13
 Passengers in Cabin Class G: 4
 ```
-   ![Distribution of Passengers by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/02_kernel_density_estimation_of_age_distribution_in_different_passenger_classes.png)
+   ![Distribution of Passengers by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/blob/8f3f5416ed2c7ad24fe9d00913b46235828850b1/Images/01_titanic_catplot_of_all_cabins_passengers.png)
 
 3. Where did the passengers come from?
 
