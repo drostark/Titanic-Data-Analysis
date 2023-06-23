@@ -274,7 +274,7 @@ print(f"Number of Females on board: {female_count}")
 Number of Males on board: 577
 Number of Females on board: 314
 ```
-   ![Distribution of Passengers by Sex](Images/01_Distribution of Passengers by Sex - Male VS. Female.png)
+   ![Distribution of Passengers by Sex](https://github.com/drostark/Titanic-Data-Analysis/blob/1df927c8099a292c6c4b4782b892343cfa66c436/Images/01_distribution_of%20passengers_by_sex.png)
 
    ```python
    titanic_df['Age'].hist(bins=70,edgecolor='white')
