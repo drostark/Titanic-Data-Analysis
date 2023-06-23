@@ -8,12 +8,23 @@ The dataset contains information about the passengers on the Titanic. Here are s
 
 - Survived: 0 indicates not survived, 1 indicates survived.
 - Pclass: Class of the passenger (1, 2, or 3).
-- Sex: Gender of the passenger.
-- Age: Age of the passenger.
 - SibSp: Number of siblings/spouses aboard.
 - Parch: Number of parents/children aboard.
+- Ticket: Ticket number
+- Cabin: Cabin Number
 - Embarked: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton).
 
+```python
+titanic_df.head(10)
+```
+```python
+   PassengerId  Survived  Pclass                                               Name     Sex   Age  SibSp  Parch            Ticket     Fare Cabin Embarked
+0            1         0       3                            Braund, Mr. Owen Harris    male  22.0      1      0         A/5 21171   7.2500   NaN        S
+1            2         1       1  Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1      0          PC 17599  71.2833   C85        C
+2            3         1       3                             Heikkinen, Miss. Laina  female  26.0      0      0  STON/O2. 3101282   7.9250   NaN        S
+3            4         1       1       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1      0            113803  53.1000  C123        S
+4            5         0       3                           Allen, Mr. William Henry    male  35.0      0      0            373450   8.0500   NaN        S
+```
 Please note that the "Cabin" column has only 284 non-null entries out of 891 total passengers.
 
 ## Project Overview
