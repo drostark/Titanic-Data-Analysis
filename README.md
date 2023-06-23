@@ -316,7 +316,7 @@ oldest = titanic_df['Age'].max()
 fig.set(xlim=(0,oldest))
 fig.add_legend()
 ```
-   ![KDE Gender and Age Distribution in Different Age Groups](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/81e39e7e-493c-49db-b75e-3575ccd26dcf)
+   ![KDE Gender and Age Distribution in Different Age Groups](https://github.com/drostark/Titanic-Data-Analysis/blob/ed5d94855e683dc77983e3646e7264b184336e50/Images/04_kernel_density_estimation_of_gender_and_age_distribution_in_different_age_groups.png)
 
 In order to observe the age distribution across different passenger classes, a Kernel Density Estimation (KDE) plot was generated. This plot offers a smoothed estimate of the probability density function for each passenger class, enabling us to identify any discrepancies or patterns in the age distribution.
 ```python
