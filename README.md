@@ -1,6 +1,6 @@
 # Titanic Data Analysis
 
-This project analyzes the Titanic dataset to gain insights into the passengers on board the Titanic and factors that influenced their survival. The dataset used for this analysis is available on Kaggle at [Titanic Dataset](https://www.kaggle.com/c/titanic/data).
+This project analyzes the Titanic dataset to gain insights into the passengers on board the Titanic and the factors that influenced their survival. The dataset used for this analysis is available on Kaggle at [Titanic Dataset](https://www.kaggle.com/c/titanic/data).
 
 ## Dataset Information
 
@@ -14,10 +14,11 @@ The dataset contains information about the passengers on the Titanic. Here are s
 - Cabin: Cabin Number
 - Embarked: Port of embarkation (C = Cherbourg, Q = Queenstown, S = Southampton).
 
-## Project Overview
+## Project Overview and Steps
 
-In this project, utilizing the Google data analysis process, which includes the Ask, Prepare, Process, Analyze, Share, and Act phases, our objective is to address the following inquiries pertaining to the Titanic dataset:
+In this project, utilizing the Google data analysis process, which includes the `Ask`, `Prepare`, `Process`, `Analyze`, and `Share` phases. Our objective is to address the following inquiries pertaining to the Titanic dataset:
 
+**Part 1: Ask**
 1. Who were the passengers on the Titanic? (Ages, Gender, Class, etc.)
 2. What deck were the passengers on, and how does that relate to their class?
 3. Where did the passengers come from?
@@ -26,10 +27,7 @@ In this project, utilizing the Google data analysis process, which includes the 
 6. Did the deck have an effect on the passengers' survival rate?
 7. Did having a family member increase the odds of surviving the crash?
 
-## Project Steps
-
-**Part 1: Data Preparation**
-
+**Part 2: Data Preparation**
 1. Load the dataset from the provided CSV file.
 ```python
 titanic_df = pd.read_csv("input/train.csv")
@@ -61,7 +59,7 @@ min       1.000000    0.000000    1.000000    0.420000    0.000000    0.000000  
 75%     668.500000    1.000000    3.000000   38.000000    1.000000    0.000000   31.000000
 max     891.000000    1.000000    3.000000   80.000000    8.000000    6.000000  512.329200
 ```
-4. Check for missing information using the `info()` and `isnull()` methods.
+3. Check for missing information using the `info()` and `isnull()` methods.
 ```python
 titanic_df.info()
 ```
@@ -99,7 +97,64 @@ Cabin          687
 Embarked         2
 dtype: int64
 ```
-**Part 2: Exploratory Data Analysis**
+**Part 2: Data Process**
+1. To answer the first question, a new column called `person` was created. Using a binary method, individuals with an age greater than 16 were classified as adults, while those aged 16 or younger were classified as children.
+```python
+def male_female_child(passenger):
+    age, sex = passenger
+    if age < 16:
+        return 'child'
+    else:
+        return sex
+
+
+titanic_df['person'] = titanic_df[['Age', 'Sex']].apply(male_female_child, axis=1)
+titanic_df[0:10]
+```
+```
+   PassengerId  Survived  Pclass                                               Name     Sex   Age  SibSp  Parch            Ticket     Fare Cabin Embarked  person
+0            1         0       3                            Braund, Mr. Owen Harris    male  22.0      1      0         A/5 21171   7.2500   NaN        S    male
+1            2         1       1  Cumings, Mrs. John Bradley (Florence Briggs Th...  female  38.0      1      0          PC 17599  71.2833   C85        C  female
+2            3         1       3                             Heikkinen, Miss. Laina  female  26.0      0      0  STON/O2. 3101282   7.9250   NaN        S  female
+3            4         1       1       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1      0            113803  53.1000  C123        S  female
+4            5         0       3                           Allen, Mr. William Henry    male  35.0      0      0            373450   8.0500   NaN        S    male
+5            6         0       3                                   Moran, Mr. James    male   NaN      0      0            330877   8.4583   NaN        Q    male
+6            7         0       1                            McCarthy, Mr. Timothy J    male  54.0      0      0             17463  51.8625   E46        S    male
+7            8         0       3                     Palsson, Master. Gosta Leonard    male   2.0      3      1            349909  21.0750   NaN        S   child
+8            9         1       3  Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)  female  27.0      0      2            347742  11.1333   NaN        S  female
+9           10         1       2                Nasser, Mrs. Nicholas (Adele Achem)  female  14.0      1      0            237736  30.0708   NaN        C   child
+```
+2. In order to address the second question, it was necessary to determine the deck by extracting the first letter from the 'Cabin' column. It is important to note that the letter 'T' unexpectedly appeared in the 'Cabin' category. However, to ensure a more accurate representation of the decks, this category was dropped from the analysis.
+```python
+deck = titanic_df['Cabin'].dropna()
+
+# Grabbing only the first letter from the deck column 'A','B','C','D','E','F'
+levels = []
+for level in deck:
+    if level[0] == 'T':
+        levels.append(level[1:])
+    else:
+        levels.append(level[0])
+
+cabin_df = DataFrame(levels, columns=['Cabin'])
+cabin_df['Cabin'] = cabin_df['Cabin'].astype('category')
+cabin_df = cabin_df[cabin_df['Cabin'] != '']
+```
+```
+    Cabin
+0       C
+1       C
+2       E
+3       G
+4       C
+..    ...
+199     D
+200     B
+201     C
+202     B
+203     C
+```
+**Part 3: Exploratory Data Analysis**
 
 Perform exploratory data analysis to answer the questions and gain insights into the dataset. Use various plots, including bar plots, count plots, histograms, and kernel density estimation (KDE) plots.
 
@@ -114,7 +169,7 @@ Perform exploratory data analysis to answer the questions and gain insights into
 
       ![Distribution of Passengers by Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/9500b072-80ac-460c-8ee6-50c9db80438a)
      
-   - To provide a more comprehensive analysis of the distribution of passengers by gender, class, and age, a new column called 'person' was created. Using a binary method, individuals with an age greater than 16 were classified as adults, while those aged 16 or younger were classified as children.
+   - 
 
       ![Distribution of Passengers by Gender and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/e934ec74-cb56-4d5d-8d0d-08d6ca07d879)
      
