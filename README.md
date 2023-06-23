@@ -243,42 +243,119 @@ Perform exploratory data analysis to answer the questions and gain insights into
 
 **Answers to Questions** 
 1. Who were the passengers on the Titanic? (Ages, Gender, Class, etc.)
+```python
+sns.set(style="whitegrid", palette="Paired")
+sns.catplot(x='Sex',data=titanic_df, kind='count')
+plt.title("Distribution of Passengers by Sex - Male VS. Female")
+```
+```python
+male_count = titanic_df[titanic_df['Sex'] == 'male'].shape[0]
+female_count = titanic_df[titanic_df['Sex'] == 'female'].shape[0]
+print(f"Number of Males on board: {male_count}")
+print(f"Number of Females on board: {female_count}")
+```
+```
+Number of Males on board: 577
+Number of Females on board: 314
+```
+   ![Distribution of Passengers by Sex](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/6872f639-59c8-4c92-a9e4-5fda5e6de422)
 
-   - Visualize the distribution of passengers by sex (male vs. female).
+   ```python
+   titanic_df['Age'].hist(bins=70,edgecolor='white')
+   plt.title("Distribution of Ages")
+   plt.xlabel("Age")
+   plt.ylabel("Count")
+   average_age = round(titanic_df['Age'].mean(),1)
+   plt.text(average_age + 1, 30, f"Average Age: {average_age}", fontsize=16, color='red')
+   ```
+   ![Distribution of Passengers by Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/9500b072-80ac-460c-8ee6-50c9db80438a)
 
-      ![Distribution of Passengers by Sex](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/6872f639-59c8-4c92-a9e4-5fda5e6de422)
-     
-   - Determine the distribution of passengers by age.
+In accordance with the information provided in the earlier explanation within the Process section, an additional column was created        for this plot to distinguish individuals classified as children.
+```python
+sns.set(style="whitegrid", palette="Paired")
+sns.catplot(x='Pclass',data=titanic_df, kind='count', hue='Sex')
+plt.title("Distribution of Passengers - Genders by Classes")
+```
+```python
+class_person_counts = titanic_df.groupby(['Pclass', 'person']).size().unstack(fill_value=0)
+for pclass, row in class_person_counts.iterrows():
+    male_count = row['male']
+    female_count = row['female']
+    child_count = row['child']
+    print(f"Passenger Class {pclass}: Male: {male_count}, Female: {female_count}, Child: {child_count}")
+```
+```
+Passenger Class 1: Male: 119, Female: 91, Child: 6
+Passenger Class 2: Male: 99, Female: 66, Child: 19
+Passenger Class 3: Male: 319, Female: 114, Child: 58
+```
+   ![Distribution of Passengers by Gender and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/e934ec74-cb56-4d5d-8d0d-08d6ca07d879)
 
-      ![Distribution of Passengers by Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/9500b072-80ac-460c-8ee6-50c9db80438a)
-     
-   - 
+Additionally, I analyzed the distribution of gender and age across various age groups by utilizing a KDE plot. This visualization provides insights into the density of gender and age within specific age intervals.
+```python
+fig = sns.FacetGrid(titanic_df,hue='person',aspect=4, palette="winter")
+fig.map(sns.kdeplot,'Age',fill=True)
+plt.title("Kernel Density Estimation (KDE) of Gender and Age Distribution in Different Age Groups")
+oldest = titanic_df['Age'].max()
+fig.set(xlim=(0,oldest))
+fig.add_legend()
+```
+   ![KDE Gender and Age Distribution in Different Age Groups](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/81e39e7e-493c-49db-b75e-3575ccd26dcf)
 
-      ![Distribution of Passengers by Gender and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/e934ec74-cb56-4d5d-8d0d-08d6ca07d879)
-     
-   - To visualize the age distribution among different passenger classes, we created a Kernel Density Estimation (KDE) plot. This plot provides a smooth estimate of the probability density function for each passenger class, allowing us to observe any variations in age distribution.
+In order to observe the age distribution across different passenger classes, a Kernel Density Estimation (KDE) plot was generated. This plot offers a smoothed estimate of the probability density function for each passenger class, enabling us to identify any discrepancies or patterns in the age distribution.
+```python
+fig = sns.FacetGrid(titanic_df, hue='Pclass', aspect=4, palette="winter")
+fig.map(sns.kdeplot, 'Age', fill=True)
+plt.title("Kernel Density Estimation (KDE) of Age Distribution in Different Passenger Classes")
+fig.set(xlim=(0, oldest))
+fig.add_legend(title='Passenger Class')
+```
+   ![KDE Age Distribution in Different Passenger Classes](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/183f1b48-b359-405e-972d-7ca1b421511c)
 
-      ![KDE Age Distribution in Different Passenger Classes](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/183f1b48-b359-405e-972d-7ca1b421511c)
-     
-      The KDE plot displays the density of age distribution for each passenger class, helping us understand the age demographics within different classes.
+2. What deck were the passengers on, and how does that relate to their class?
 
-   - I also examined the gender and age distribution across different age groups using another KDE plot. This plot allows us to visualize the density of gender and age within specific age intervals.
-      ![KDE Gender and Age Distribution in Different Age Groups](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/81e39e7e-493c-49db-b75e-3575ccd26dcf)
-   This KDE plot provides insights into the distribution of gender and age across different age groups, aiding our understanding of the composition of passengers within specific age ranges.
+```python
+levels = []
+for level in deck:
+    if level[0] == 'T':
+        levels.append(level[1:])
+    else:
+        levels.append(level[0])
 
-3. What deck were the passengers on, and how does that relate to their class?
+cabin_df = DataFrame(levels, columns=['Cabin'])
+cabin_df['Cabin'] = cabin_df['Cabin'].astype('category')
+cabin_df = cabin_df[cabin_df['Cabin'] != '']
+cabin_df = cabin_df.dropna()
+cabin_df_columns = ['Cabin']
+cabin_df['Cabin'] = cabin_df['Cabin'].cat.remove_categories('')
 
-   - Extract the deck information from the "Cabin" column.
-   - Visualize the distribution of passengers by cabin deck and class.
 
-      ![Distribution of Passengers by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/8723ad1d-56bd-48e6-860b-0080f4f8a03f)
+palette = sns.color_palette("winter_d", len(cabin_df['Cabin'].cat.categories))[::-1]
+sns.catplot(x='Cabin', data=cabin_df, order=sorted(cabin_df['Cabin'].cat.categories), 
+            palette=palette, kind='count')
+plt.title("Passenger Distribution by Cabin Deck and Class")
+```
+```python
+class_counts = cabin_df['Cabin'].value_counts().sort_index()
+for cabin_class, count in class_counts.items():
+    print(f"Passengers in Cabin Class {cabin_class}: {count}")
+```
+```
+Passengers in Cabin Class A: 15
+Passengers in Cabin Class B: 47
+Passengers in Cabin Class C: 59
+Passengers in Cabin Class D: 33
+Passengers in Cabin Class E: 32
+Passengers in Cabin Class F: 13
+Passengers in Cabin Class G: 4
+```
+   ![Distribution of Passengers by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/8723ad1d-56bd-48e6-860b-0080f4f8a03f)
 
-
-4. Where did the passengers come from?
+3. Where did the passengers come from?
 
    - Analyze the distribution of passengers by the port of embarkation (Cherbourg, Queenstown, Southampton) and class.
 
-      ![Distribution of Passengers by Port of Embarkation and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/7d4265d6-042c-4e09-9cdb-2b9809ad5c89)
+   ![Distribution of Passengers by Port of Embarkation and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/7d4265d6-042c-4e09-9cdb-2b9809ad5c89)
 
 
 5. Who was alone, and who was with family?
