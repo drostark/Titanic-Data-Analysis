@@ -19,6 +19,7 @@ The dataset contains information about the passengers on the Titanic. Here are s
 In this project, utilizing the Google data analysis process, which includes the `Ask`, `Prepare`, `Process`, `Analyze`, and `Share` phases. Our objective is to address the following inquiries pertaining to the Titanic dataset:
 
 **Part 1: Ask**
+--------------------
 1. Who were the passengers on the Titanic? (Ages, Gender, Class, etc.)
 2. What deck were the passengers on, and how does that relate to their class?
 3. Where did the passengers come from?
@@ -28,6 +29,7 @@ In this project, utilizing the Google data analysis process, which includes the 
 7. Did having a family member increase the odds of surviving the crash?
 
 **Part 2: Data Preparation**
+--------------------
 1. Load the dataset from the provided CSV file.
 ```python
 titanic_df = pd.read_csv("input/train.csv")
@@ -97,7 +99,8 @@ Cabin          687
 Embarked         2
 dtype: int64
 ```
-**Part 2: Data Process**
+**Part 3: Data Process**
+--------------------
 1. To answer the first question, a new column called `person` was created. Using a binary method, individuals with an age greater than 16 were classified as adults, while those aged 16 or younger were classified as children.
 ```python
 def male_female_child(passenger):
@@ -233,8 +236,9 @@ Alone_mapping = {'With Family': 'With Family', 'Alone': 'Without Family'}
 889         1        Alone
 890         0        Alone
 ```
-**Part 3: Exploratory Data Analysis**
 
+**Part 4: Exploratory Data Analysis**
+--------------------
 Perform exploratory data analysis to answer the questions and gain insights into the dataset. Use various plots, including bar plots, count plots, histograms, and kernel density estimation (KDE) plots.
 
 **Answers to Questions** 
