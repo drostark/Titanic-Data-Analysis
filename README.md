@@ -154,6 +154,85 @@ cabin_df = cabin_df[cabin_df['Cabin'] != '']
 202     B
 203     C
 ```
+3. To provide a clearer explanation for question number 3, a mapping dictionary was utilized to accurately identify the city names in the plot. This allowed for a more precise representation and interpretation of the data related to the embarked passengers' cities.
+```python
+city_mapping = {'C': 'Cherbourg', 'Q': 'Queenstown', 'S': 'Southampton'}
+```
+4. To address question number 4, it was necessary to establish the criteria for determining whether a passenger was traveling alone. This was achieved by considering the information from the `SibSp` column, which indicates the number of siblings/spouses aboard, and the `Parch` column, which indicates the number of parents/children aboard. By incorporating the information from these two columns, a new column named `Alone` was created to classify passengers as either being with or without family. This allowed for a more comprehensive understanding of whether individuals were traveling alone or accompanied by family members.
+```python
+titanic_df['Alone'] = titanic_df.SibSp + titanic_df.Parch
+titanic_df['Alone'].loc[titanic_df['Alone']> 0] = 'With Family'
+titanic_df['Alone'].loc[titanic_df['Alone'] == 0] = 'Alone'
+```
+```
+0      With Family
+1      With Family
+2            Alone
+3      With Family
+4            Alone
+          ...
+886          Alone
+887          Alone
+888    With Family
+889          Alone
+890          Alone
+```
+5. To address question number 5, the `Survivor` column was introduced. It contains categorical values indicating whether a passenger survived or not. The values 'No' and 'Yes' are assigned to represent passengers who did not survive and those who did survive, respectively. This mapping provides a clear distinction and aids in analyzing the factors that influenced passenger survival during the Titanic incident.
+```python
+titanic_df['Survivor'] = titanic_df.Survived.map({0:'No',1:'Yes'})
+```
+```
+0       No
+1      Yes
+2      Yes
+3      Yes
+4       No
+      ...
+886     No
+887    Yes
+888     No
+889    Yes
+890     No
+Name: Survivor, Length: 891, dtype: object
+```
+6. In order to address question 6, I merged the new 'Cabin' column with the 'Survived' column by concatenating them. Any missing values in the resulting dataset were subsequently removed, ensuring a complete and reliable dataset for analysis.
+```python
+merged_df2 = pd.concat([titanic_df['Survived'], titanic_df['Alone']], axis=1)
+merged_df2 = merged_df2.dropna()
+```
+```
+    Cabin  Survived
+0       C         0
+1       C         1
+2       E         1
+3       G         1
+4       C         0
+..    ...       ...
+199     D         0
+200     B         0
+201     C         0
+202     B         0
+203     C         0
+```
+7. By combining the 'Survived' and 'Alone' columns of the Titanic dataset, a new data frame is created. This data frame represents the relationship between passenger survival and their status of traveling alone or with family. The 'Alone' column is mapped to distinguish between passengers traveling with family and those traveling alone.
+```python
+merged_df2 = pd.concat([titanic_df['Survived'], titanic_df['Alone']], axis=1)
+Alone_mapping = {'With Family': 'With Family', 'Alone': 'Without Family'}
+```
+```
+     Survived        Alone
+0           0  With Family
+1           1  With Family
+2           1        Alone
+3           1  With Family
+4           0        Alone
+..        ...          ...
+886         0        Alone
+887         1        Alone
+888         0  With Family
+889         1        Alone
+890         0        Alone
+```
 **Part 3: Exploratory Data Analysis**
 
 Perform exploratory data analysis to answer the questions and gain insights into the dataset. Use various plots, including bar plots, count plots, histograms, and kernel density estimation (KDE) plots.
