@@ -274,7 +274,7 @@ print(f"Number of Females on board: {female_count}")
 Number of Males on board: 577
 Number of Females on board: 314
 ```
-   ![Distribution of Passengers by Sex](https://github.com/drostark/Titanic-Data-Analysis/blob/1df927c8099a292c6c4b4782b892343cfa66c436/Images/01_distribution_of%20passengers_by_sex.png)
+   ![Distribution of Passengers by Sex](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/01_distribution_of_passengers_by_sex.png)
 
    ```python
    titanic_df['Age'].hist(bins=70,edgecolor='white')
@@ -284,7 +284,7 @@ Number of Females on board: 314
    average_age = round(titanic_df['Age'].mean(),1)
    plt.text(average_age + 1, 30, f"Average Age: {average_age}", fontsize=16, color='red')
    ```
-   ![Distribution of Passengers by Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/9500b072-80ac-460c-8ee6-50c9db80438a)
+   ![Distribution of Passengers by Age](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/03_distribution_of_ages.png)
 
 In accordance with the information provided in the earlier explanation within the Process section, an additional column was created        for this plot to distinguish individuals classified as children.
 ```python
@@ -305,7 +305,7 @@ Passenger Class 1: Male: 119, Female: 91, Child: 6
 Passenger Class 2: Male: 99, Female: 66, Child: 19
 Passenger Class 3: Male: 319, Female: 114, Child: 58
 ```
-   ![Distribution of Passengers by Gender and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/e934ec74-cb56-4d5d-8d0d-08d6ca07d879)
+   ![Distribution of Passengers by Gender and Class](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/02_distribution_of_genders_and_children_by_passenger_class.png)
 
 Additionally, I analyzed the distribution of gender and age across various age groups by utilizing a KDE plot. This visualization provides insights into the density of gender and age within specific age intervals.
 ```python
@@ -326,7 +326,7 @@ plt.title("Kernel Density Estimation (KDE) of Age Distribution in Different Pass
 fig.set(xlim=(0, oldest))
 fig.add_legend(title='Passenger Class')
 ```
-   ![KDE Age Distribution in Different Passenger Classes](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/183f1b48-b359-405e-972d-7ca1b421511c)
+   ![KDE Age Distribution in Different Passenger Classes](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/02_kernel_density_estimation_of_age_distribution_in_different_passenger_classes.png)
 
 2. What deck were the passengers on, and how does that relate to their class?
 
@@ -365,7 +365,7 @@ Passengers in Cabin Class E: 32
 Passengers in Cabin Class F: 13
 Passengers in Cabin Class G: 4
 ```
-   ![Distribution of Passengers by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/8723ad1d-56bd-48e6-860b-0080f4f8a03f)
+   ![Distribution of Passengers by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/02_kernel_density_estimation_of_age_distribution_in_different_passenger_classes.png)
 
 3. Where did the passengers come from?
 
@@ -387,7 +387,7 @@ Embarked from Cherbourg: Total: 168, Counts: Class 1: 85, Class 2: 17, Class 3: 
 Embarked from Queenstown: Total: 77, Counts: Class 1: 2, Class 2: 3, Class 3: 72
 Embarked from Southampton: Total: 644, Counts: Class 1: 127, Class 2: 164, Class 3: 353
 ```
-   ![Distribution of Passengers by Port of Embarkation and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/7d4265d6-042c-4e09-9cdb-2b9809ad5c89)
+   ![Distribution of Passengers by Port of Embarkation and Class](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/01_embarked_passengers_cities_by_class.png)
 
 
 4. Who was alone, and who was with family?
@@ -408,7 +408,7 @@ for category, count in alone_counts.items():
 Passengers Alone: 537
 Passengers With Family: 354
 ```
-   ![Count of Passengers Alone vs. with Family](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/b9aaf087-23b6-48e0-a9dd-03e3619228ca)
+   ![Count of Passengers Alone vs. with Family](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/08_alone_vs_with_family.png)
 
 5. What factors helped someone survive the sinking?
 ```python
@@ -425,7 +425,7 @@ print(f"Number of Died: {survivor_counts['No']}")
 Number of Survivors: 342
 Number of Died: 549
 ```
-   ![Count of Survivors](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/08f21733-23b5-4c7f-8e9d-fd0f752a289a)
+   ![Count of Survivors](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/08_survivor_yes_no.png)
      
 ```python
 sns.lineplot(x='Pclass', y='Survived', data=titanic_df, palette='winter', marker='o')
@@ -443,7 +443,7 @@ Survival Rate for Class 1: 62.96%
 Survival Rate for Class 2: 47.28%
 Survival Rate for Class 3: 24.24%
 ```
-   ![Survival Rate by Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3e9f873b-15b6-4f70-918b-04daf096857f)
+   ![Survival Rate by Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/08_survival_rate_by_age_and_passenger_class.png)
 ```python
 sns.lineplot(x='Pclass', y='Survived',hue='person', data=titanic_df, palette='winter', marker='o')
 plt.xticks(np.arange(1, 4, 1), ['1', '2', '3'])
@@ -462,7 +462,7 @@ Survival Rate for Class 1: child: 83.33%, female: 97.80%, male: 35.29%
 Survival Rate for Class 2: child: 100.00%, female: 90.91%, male: 8.08%
 Survival Rate for Class 3: child: 43.10%, female: 49.12%, male: 11.91%
 ```
-   ![Survival Rate by Passenger Class and gender](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3a83796b-438b-41b4-9034-8c48981beb13)
+   ![Survival Rate by Passenger Class and gender](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/08_survived_based_on_passenger_class_and_gender.png)
 
 ```python
 sns.lmplot(x='Age',y='Survived',data=titanic_df,palette='winter')
@@ -479,7 +479,7 @@ print(f"Average Decline in Survival Rate: {average_decline:.2f}%")
 ```
 Average Decline in Survival Rate: -5.80%
 ```
-   ![Survival Rate by Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3732de20-f56a-49f7-bdf9-fba0c9db49ab)
+   ![Survival Rate by Age](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/08_survival_rate_by_age.png)
 
 ```python
 generations = [10,20,40,60,80]
@@ -487,13 +487,13 @@ sns.lmplot(x='Age',y='Survived', hue='Sex', data=titanic_df, palette='winter',x_
 plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
 plt.title('Survival Rate by Age and Sex')
 ```
-   ![Survival Rate by Sex and Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/1fff2295-a869-4f9a-a380-10715931e934)
+   ![Survival Rate by Sex and Age](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/08_age_and_survival_rates_base_on_sex.png)
 ```python
 sns.lmplot(x='Age',y='Survived', hue='Pclass', data=titanic_df, palette='winter',x_bins=generations)
 plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
 plt.title('Survival Rate by Age and Passenger Class')
 ```
-   ![Survival Rate by Age and Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/c8dd08ee-fb37-42cd-abd3-f6ba9e081702)
+   ![Survival Rate by Age and Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/08_survival_rate_by_age_and_passenger_class.png)
 
 6. Did the deck have an effect on the passengers' survival rate?
 ```python
@@ -503,7 +503,7 @@ sns.barplot(x='Cabin', y='Survived', data=merged_df, palette='winter')
 plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
 plt.title('Survival Rate by Cabin')
 ```
-   ![Survival Count by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/0e0fc83c-8351-4664-9587-3d8113173aa8)
+   ![Survival Count by Deck and Class](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/06_survival_rate_by_cabin.png)
 
 7. Did having a family member increase the odds of surviving the crash?
 ```python
@@ -511,7 +511,7 @@ merged_df2 = pd.concat([titanic_df['Survived'], titanic_df['Alone']], axis=1)
 Alone_mapping = {'With Family': 'With Family', 'Alone': 'Without Family'}
 sns.barplot(x='Alone', y='Survived', data=merged_df2, palette='winter')
 ```
-   ![Survival Rate by Presence of Family](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/947047c0-ca9c-4d31-99e9-d8a1a11ccc0c)
+   ![Survival Rate by Presence of Family](https://github.com/drostark/Titanic-Data-Analysis/blob/948ef4049fdb90edca24008ecb3d579683ab0d09/Images/07_survival_rate_with_or_without_family.png)
 
 **Part 5: Conclusion**
 --------------------
