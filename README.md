@@ -353,31 +353,90 @@ Passengers in Cabin Class G: 4
 
 3. Where did the passengers come from?
 
-   - Analyze the distribution of passengers by the port of embarkation (Cherbourg, Queenstown, Southampton) and class.
-
+```python
+city_mapping = {'C': 'Cherbourg', 'Q': 'Queenstown', 'S': 'Southampton'}
+sns.catplot(x='Embarked', data=titanic_df, hue='Pclass', kind='count',palette='winter', order=['C', 'Q', 'S'])
+plt.xticks(range(len(city_mapping)), city_mapping.values())
+plt.title("Embarked Passengers Cities by Class")
+```
+```python
+passenger_counts = titanic_df.groupby(['Embarked', 'Pclass']).size().unstack()
+for city_code, city_name in city_mapping.items():
+    total_count = passenger_counts.loc[city_code].sum()
+    class_counts = ', '.join([f"Class {pclass}: {count}" for pclass, count in passenger_counts.loc[city_code].items()])
+    print(f"Embarked from {city_name}: Total: {total_count}, Counts: {class_counts}")
+```
+```
+Embarked from Cherbourg: Total: 168, Counts: Class 1: 85, Class 2: 17, Class 3: 66
+Embarked from Queenstown: Total: 77, Counts: Class 1: 2, Class 2: 3, Class 3: 72
+Embarked from Southampton: Total: 644, Counts: Class 1: 127, Class 2: 164, Class 3: 353
+```
    ![Distribution of Passengers by Port of Embarkation and Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/7d4265d6-042c-4e09-9cdb-2b9809ad5c89)
 
 
-5. Who was alone, and who was with family?
+4. Who was alone, and who was with family?
 
-   - Determine if passengers were traveling alone or with family by creating a new column called "Alone" based on the number of siblings/spouses and parents/children aboard.
-   - Visualize the count of passengers who were alone versus with family using a bar plot to compare the number of individuals in each category.
+```python
+titanic_df['Alone'] = titanic_df.SibSp + titanic_df.Parch
+titanic_df['Alone'].loc[titanic_df['Alone']> 0] = 'With Family'
+titanic_df['Alone'].loc[titanic_df['Alone'] == 0] = 'Alone'
+sns.catplot(x='Alone',data=titanic_df, palette='Blues', kind='count',order=['Alone','With Family'])
+plt.title("Passenger Count: Alone vs. With Family")
+```
+```python
+alone_counts = titanic_df['Alone'].value_counts()
+for category, count in alone_counts.items():
+    print(f"Passengers {category}: {count}")
+```
+```
+Passengers Alone: 537
+Passengers With Family: 354
+```
+   ![Count of Passengers Alone vs. with Family](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/b9aaf087-23b6-48e0-a9dd-03e3619228ca)
 
-      ![Count of Passengers Alone vs. with Family](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/b9aaf087-23b6-48e0-a9dd-03e3619228ca)
-
-6. What factors helped someone survive the sinking?
-
-   - Create a "Survivor" column mapping the survival status (0 = No, 1 = Yes).
-   - Visualize the count of survivors.
-
-      ![Count of Survivors](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/08f21733-23b5-4c7f-8e9d-fd0f752a289a)
+5. What factors helped someone survive the sinking?
+```python
+titanic_df['Survivor'] = titanic_df.Survived.map({0:'No',1:'Yes'})
+sns.catplot(x='Survivor',data=titanic_df, palette='Set1', kind='count')
+plt.title("Passenger Survival Count")
+```
+```python
+survivor_counts = titanic_df['Survivor'].value_counts()
+print(f"Number of Survivors: {survivor_counts['Yes']}")
+print(f"Number of Died: {survivor_counts['No']}")
+```
+```
+Number of Survivors: 342
+Number of Died: 549
+```
+   ![Count of Survivors](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/08f21733-23b5-4c7f-8e9d-fd0f752a289a)
      
-   - Analyze the survival rate based on passenger class, gender, and age.
-      ![Survival Rate by Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3e9f873b-15b6-4f70-918b-04daf096857f)
-   
-      ![Survival Rate by Sex and Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/1fff2295-a869-4f9a-a380-10715931e934)
-   
-      ![Survival Rate by Age and Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/c8dd08ee-fb37-42cd-abd3-f6ba9e081702)
+```python
+sns.lineplot(x='Pclass', y='Survived', data=titanic_df, palette='winter', marker='o')
+plt.xticks(np.arange(1, 4, 1), ['1', '2', '3'])
+plt.gca().set_yticklabels(['{:.0f}%'.format(x * 100) for x in plt.gca().get_yticks()])
+plt.title('Survival Rate by Passenger Class')
+```
+```python
+survival_rates = titanic_df.groupby('Pclass')['Survived'].mean()
+for pclass, survival_rate in survival_rates.items():
+    print(f"Survival Rate for Class {pclass}: {survival_rate:.2%}")
+```
+```
+Survival Rate for Class 1: 62.96%
+Survival Rate for Class 2: 47.28%
+Survival Rate for Class 3: 24.24%
+```
+   ![Survival Rate by Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/3e9f873b-15b6-4f70-918b-04daf096857f)
+
+```python
+
+```
+   ![Survival Rate by Sex and Age](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/1fff2295-a869-4f9a-a380-10715931e934)
+```python
+
+```
+   ![Survival Rate by Age and Passenger Class](https://github.com/drostark/Titanic-Data-Analysis/assets/52506085/c8dd08ee-fb37-42cd-abd3-f6ba9e081702)
 
 6. Did the deck have an effect on the passengers' survival rate?
 
