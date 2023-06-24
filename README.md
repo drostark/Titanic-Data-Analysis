@@ -77,7 +77,14 @@ min       1.000000    0.000000    1.000000    0.420000    0.000000    0.000000  
 75%     668.500000    1.000000    3.000000   38.000000    1.000000    0.000000   31.000000
 max     891.000000    1.000000    3.000000   80.000000    8.000000    6.000000  512.329200
 ```
-5. Check for missing information using the `info()` and `isnull()` methods.
+5. Check for duplicates and missing information using the `duplicated()`, `info()` and `isnull()` methods.
+ ```python
+duplicates_count = titanic_df.duplicated().sum()
+print("Number of duplicated rows:", duplicates_count)
+```
+```
+Number of duplicated rows: 0
+```
 ```python
 titanic_df.info()
 ```
@@ -96,7 +103,7 @@ titanic_df.info()
 dtypes: float64(2), int64(5), object(5)
 memory usage: 83.7+ KB
 ```
-- The training dataset consists of a total of 891 rows and 12 columns. Please note that the "Cabin" column has only 204 non-null entries out of 891 total passengers.
+
 ```python
 titanic_df.isnull().sum()
 ```
@@ -115,6 +122,8 @@ Cabin          687
 Embarked         2
 dtype: int64
 ```
+The training dataset contains 891 rows and 12 columns. It's important to mention that the `Cabin` column has only 204 non-null entries out of the total 891 passengers. As there is no valid way to retrieve or generate the missing data for this column, those rows were dropped during the data processing phase. Out of the 891 total passengers, the `Age` column has 714 valid entries. At first, it presents a challenge to ascertain the age of passengers who were traveling with family members (where `SibSp` and `Parch` are not equal to 0). However, passengers who were traveling alone might provide a potential reference to estimate their age.
+
 **Part 3: Data Process**
 --------------------
 1. To answer the first question, a new column called `person` was created. Using a binary method, individuals with an age greater than 16 were classified as adults, while those aged 16 or younger were classified as children.
@@ -143,7 +152,7 @@ titanic_df[0:10]
 8            9         1       3  Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)  female  27.0      0      2            347742  11.1333   NaN        S  female
 9           10         1       2                Nasser, Mrs. Nicholas (Adele Achem)  female  14.0      1      0            237736  30.0708   NaN        C   child
 ```
-2. In order to address the second question, it was necessary to determine the deck by extracting the first letter from the 'Cabin' column. It is important to note that the letter 'T' unexpectedly appeared in the 'Cabin' category. However, to ensure a more accurate representation of the decks, this category was dropped from the analysis.
+2. In order to address the second question, it was necessary to determine the deck by extracting the first letter from the `Cabin` column. It is important to note that the letter 'T' unexpectedly appeared in the `Cabin` category. However, to ensure a more accurate representation of the decks, this category was dropped from the analysis.
 ```python
 deck = titanic_df['Cabin'].dropna()
 
