@@ -52,7 +52,7 @@ titanic_df = pd.read_csv("input/train.csv")
 ```
 4. General Overview of the train.csv Dataset 
 ```python
-titanic_df.head(10)
+titanic_df.head()
 ```
 ```
    PassengerId  Survived  Pclass                                               Name     Sex   Age  SibSp  Parch            Ticket     Fare Cabin Embarked
