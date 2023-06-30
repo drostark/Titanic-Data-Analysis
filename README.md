@@ -16,7 +16,7 @@ The dataset contains information about the passengers on the Titanic. Here are s
 
 ## Project Overview and Steps
 
-In this project, utilizing the Google data analysis process, which includes the `Ask`, `Prepare`, `Process`, `Analyze`, and `Share` phases. Our objective is to address the following inquiries pertaining to the Titanic dataset:
+In this project, utilizing the Google data analysis process, which includes the `Ask`, `Prepare`, `Process`, `Analyze`, and `Share` phases. My objective is to address the following inquiries pertaining to the Titanic dataset.
 
 **Part 1: Ask**
 --------------------
